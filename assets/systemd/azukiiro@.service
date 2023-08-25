@@ -1,0 +1,13 @@
+[Unit]
+Description=Azukiiro Judger
+After=network.target syslog.target
+Wants=network.target
+
+[Service]
+User=azukiiro
+Group=azukiiro
+Type=simple
+ExecStart=/opt/azukiiro/build/azukiiro %i
+
+[Install]
+WantedBy=multi-user.target
