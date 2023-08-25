@@ -19,7 +19,7 @@ func Execute(ctx context.Context) {
 		} else {
 			viper.AddConfigPath("/etc/azukiiro/")
 			viper.AddConfigPath(".")
-			viper.SetConfigName("config.yaml")
+			viper.SetConfigName("config")
 		}
 
 		viper.SetDefault("storagePath", "/var/lib/azukiiro")
