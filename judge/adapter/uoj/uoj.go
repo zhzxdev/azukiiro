@@ -145,11 +145,20 @@ func ReadResult(resultPath string) (client.PatchSolutionTaskRequest, common.Solu
 		}, nil
 }
 
+type UOJAdapterConfig struct {
+	SandboxMode string `json:"sandbox_mode"`
+}
+
 type SolutionMetadata struct {
 	Language string `json:"language"`
 }
 
 func (u *UojAdapter) Judge(ctx context.Context, config common.ProblemConfig, problemData string, solutionData string) error {
+	adapterConfig := UOJAdapterConfig{
+		SandboxMode: "bwrap",
+	}
+	json.Unmarshal([]byte(config.Judge.Config), &adapterConfig)
+
 	judgerPath := "/opt/uoj_judger"
 
 	// unzip data
@@ -178,7 +187,35 @@ func (u *UojAdapter) Judge(ctx context.Context, config common.ProblemConfig, pro
 	}
 
 	// run judger
-	cmd := exec.Command(judgerPath+"/main_judger", solutionDir, problemDir)
+	var cmd *exec.Cmd
+	switch adapterConfig.SandboxMode {
+	case "none":
+		cmd = exec.Command(judgerPath+"/main_judger", solutionDir, problemDir)
+	case "bwrap":
+		cmd = exec.Command("bwrap",
+			"--dir", "/tmp",
+			"--dir", "/var",
+			"--bind", solutionDir, "/tmp/solution",
+			"--ro-bind", problemDir, "/tmp/problem",
+			"--ro-bind", judgerPath, "/opt/uoj_judger",
+			"--bind", judgerPath+"/result", "/opt/uoj_judger/result",
+			"--bind", judgerPath+"/work", "/opt/uoj_judger/work",
+			"--ro-bind", "/usr", "/usr",
+			"--symlink", "../tmp", "var/tmp",
+			"--proc", "/proc",
+			"--dev", "/dev",
+			"--ro-bind", "/etc/resolv.conf", "/etc/resolv.conf",
+			"--symlink", "usr/lib", "/lib",
+			"--symlink", "usr/lib64", "/lib64",
+			"--symlink", "usr/bin", "/bin",
+			"--symlink", "usr/sbin", "/sbin",
+			"--chdir", "/opt/uoj_judger/main_judger",
+			"--unshare-all",
+			"--die-with-parent",
+			"/opt/uoj_judger/main_judger", "/tmp/solution", "/tmp/problem")
+	default:
+		return fmt.Errorf("unknown sandbox mode: %s", adapterConfig.SandboxMode)
+	}
 	cmd.Dir = judgerPath
 	log.Printf("Running %s\n", cmd)
 	if err := cmd.Run(); err != nil {

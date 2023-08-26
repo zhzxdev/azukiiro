@@ -63,7 +63,7 @@ func Poll(ctx context.Context) (bool, error) {
 		log.Println("Judge finished with error:", err)
 		err = client.SaveSolutionDetails(ctx, &common.SolutionDetails{
 			Jobs:    []*common.SolutionDetailsJob{},
-			Summary: fmt.Sprintf("An Error has occurred:\n\n```\n\n%v\n\n```", err),
+			Summary: fmt.Sprintf("An Error has occurred:\n\n```\n%s\n```", err),
 		})
 		if err != nil {
 			log.Println("Save details failed:", err)
