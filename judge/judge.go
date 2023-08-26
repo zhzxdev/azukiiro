@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/zhzxdev/azukiiro/azukiiro/adapter"
 	"github.com/zhzxdev/azukiiro/azukiiro/client"
 	"github.com/zhzxdev/azukiiro/azukiiro/common"
+	"github.com/zhzxdev/azukiiro/azukiiro/judge/adapter"
 	"github.com/zhzxdev/azukiiro/azukiiro/storage"
 )
 
