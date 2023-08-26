@@ -209,7 +209,7 @@ func (u *UojAdapter) Judge(ctx context.Context, config common.ProblemConfig, pro
 			"--symlink", "usr/lib64", "/lib64",
 			"--symlink", "usr/bin", "/bin",
 			"--symlink", "usr/sbin", "/sbin",
-			"--chdir", "/opt/uoj_judger/main_judger",
+			"--chdir", "/opt/uoj_judger",
 			"--unshare-all",
 			"--die-with-parent",
 			"/opt/uoj_judger/main_judger", "/tmp/solution", "/tmp/problem")
