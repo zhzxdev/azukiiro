@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/zhzxdev/azukiiro/azukiiro/client"
-	"github.com/zhzxdev/azukiiro/azukiiro/common"
-	"github.com/zhzxdev/azukiiro/azukiiro/judge/adapter"
-	"github.com/zhzxdev/azukiiro/azukiiro/storage"
+	"github.com/zhzxdev/azukiiro/client"
+	"github.com/zhzxdev/azukiiro/common"
+	"github.com/zhzxdev/azukiiro/judge/adapter"
+	"github.com/zhzxdev/azukiiro/storage"
 )
 
 func judge(ctx context.Context, res *client.PollSolutionResponse) error {

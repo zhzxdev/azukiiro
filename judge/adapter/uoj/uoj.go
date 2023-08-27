@@ -9,9 +9,9 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/zhzxdev/azukiiro/azukiiro/client"
-	"github.com/zhzxdev/azukiiro/azukiiro/common"
-	"github.com/zhzxdev/azukiiro/azukiiro/storage"
+	"github.com/zhzxdev/azukiiro/client"
+	"github.com/zhzxdev/azukiiro/common"
+	"github.com/zhzxdev/azukiiro/storage"
 )
 
 type UojAdapter struct{}

@@ -1,4 +1,4 @@
-module github.com/zhzxdev/azukiiro/azukiiro
+module github.com/zhzxdev/azukiiro
 
 go 1.20
 

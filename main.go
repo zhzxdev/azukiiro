@@ -5,7 +5,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/zhzxdev/azukiiro/azukiiro/cli"
+	"github.com/zhzxdev/azukiiro/cli"
 )
 
 func main() {

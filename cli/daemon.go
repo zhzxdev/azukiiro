@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
-	"github.com/zhzxdev/azukiiro/azukiiro/client"
-	"github.com/zhzxdev/azukiiro/azukiiro/judge"
+	"github.com/zhzxdev/azukiiro/client"
+	"github.com/zhzxdev/azukiiro/judge"
 )
 
 type daemonArgs struct {

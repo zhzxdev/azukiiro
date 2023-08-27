@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"github.com/zhzxdev/azukiiro/azukiiro/client"
+	"github.com/zhzxdev/azukiiro/client"
 )
 
 type registerArgs struct {

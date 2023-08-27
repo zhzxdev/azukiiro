@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/zhzxdev/azukiiro/azukiiro/storage"
+	"github.com/zhzxdev/azukiiro/storage"
 )
 
 type ranklistContextKey int

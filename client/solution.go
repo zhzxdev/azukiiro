@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/zhzxdev/azukiiro/azukiiro/common"
-	"github.com/zhzxdev/azukiiro/azukiiro/storage"
+	"github.com/zhzxdev/azukiiro/common"
+	"github.com/zhzxdev/azukiiro/storage"
 )
 
 type PatchSolutionTaskRequest struct {

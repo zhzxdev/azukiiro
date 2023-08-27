@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/zhzxdev/azukiiro/azukiiro/storage"
+	"github.com/zhzxdev/azukiiro/storage"
 )
 
 func Execute(ctx context.Context) {
