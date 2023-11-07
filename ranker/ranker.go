@@ -139,7 +139,7 @@ func Poll(ctx context.Context) (bool, error) {
 			var totalScore float64
 			for _, problem := range *problems {
 				if result, ok := participant.Raw.Results[problem.Id]; ok {
-					totalScore += result.LastSolution.Score * problem.Settings.Score
+					totalScore += result.LastSolution.Score
 				}
 			}
 			columns = append(columns, &client.RanklistParticipantItemColumn{
