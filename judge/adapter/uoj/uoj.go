@@ -29,13 +29,15 @@ func Unzip(source string, target string) (string, error) {
 	err = exec.Command("unzip", source, "-d", dir).Run()
 	if err != nil {
 		os.RemoveAll(dir)
-		return dir, err
+		log.Println("Error unzipping", source, ":", err)
+		return dir, fmt.Errorf("failed to extract solution")
 	}
 	// remove all symlinks to avoid security issues
 	err = exec.Command("find", dir, "-type", "l", "-delete").Run()
 	if err != nil {
 		os.RemoveAll(dir)
-		return dir, err
+		log.Println("Error removing symlinks in", dir, ":", err)
+		return dir, fmt.Errorf("failed to extract solution")
 	}
 	return dir, nil
 }
