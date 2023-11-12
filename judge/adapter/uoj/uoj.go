@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"slices"
 
 	"github.com/zhzxdev/azukiiro/client"
 	"github.com/zhzxdev/azukiiro/common"
@@ -179,7 +180,8 @@ func (u *UojAdapter) Judge(ctx context.Context, config common.ProblemConfig, pro
 	if content, err := os.ReadFile(solutionDir + "/.metadata.json"); err != nil {
 		var metadata SolutionMetadata
 		json.Unmarshal(content, &metadata)
-		if metadata.Language == "C++" || metadata.Language == "C++11" || metadata.Language == "C++14" {
+		languages := []string{"C++", "C++11", "C++14", "Python2", "Python3"}
+		if slices.Contains(languages, metadata.Language) {
 			language = metadata.Language
 		}
 	}
