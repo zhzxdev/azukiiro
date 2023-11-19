@@ -157,7 +157,7 @@ type SolutionMetadata struct {
 
 func (u *UojAdapter) Judge(ctx context.Context, config common.ProblemConfig, problemData string, solutionData string) error {
 	adapterConfig := UOJAdapterConfig{
-		SandboxMode: "bwrap",
+		SandboxMode: "none",
 	}
 	json.Unmarshal([]byte(config.Judge.Config), &adapterConfig)
 
