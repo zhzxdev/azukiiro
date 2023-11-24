@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -89,7 +90,7 @@ func DownloadFile(ctx context.Context, url string, hash string) error {
 	fileHash := hex.EncodeToString(hasher.Sum(nil))
 	if fileHash != hash {
 		log.Println("Hash mismatch:", fileHash, "!=", hash)
-		return os.ErrInvalid
+		return fmt.Errorf("file hash mismatch")
 	}
 
 	// Move tmp file to cache
@@ -103,10 +104,16 @@ func PrepareFile(ctx context.Context, url string, hash string) (string, error) {
 	cachePath := GetCachePath()
 	filePath := path.Join(cachePath, hash)
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
-		// Download file
-		err := DownloadFile(ctx, url, hash)
-		if err != nil {
-			return "", err
+		// Download file with retry
+		retry := 3
+		for retry > 0 {
+			err := DownloadFile(ctx, url, hash)
+			if err != nil {
+				log.Println("Failed to download file:", err)
+				retry--
+				continue
+			}
+			break
 		}
 	}
 	return filePath, nil

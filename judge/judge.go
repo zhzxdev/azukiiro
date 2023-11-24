@@ -12,11 +12,27 @@ import (
 )
 
 func judge(ctx context.Context, res *client.PollSolutionResponse) error {
+	err := client.PatchSolutionTask(ctx, &client.PatchSolutionTaskRequest{
+		Score:   0,
+		Status:  "Running",
+		Message: "Preparing solution",
+	})
+	if err != nil {
+		return err
+	}
 	problemData, err := storage.PrepareFile(ctx, res.ProblemDataUrl, res.ProblemDataHash)
 	if err != nil {
 		return err
 	}
 	solutionData, err := storage.PrepareFile(ctx, res.SolutionDataUrl, res.SolutionDataHash)
+	if err != nil {
+		return err
+	}
+	err = client.PatchSolutionTask(ctx, &client.PatchSolutionTaskRequest{
+		Score:   0,
+		Status:  "Running",
+		Message: "Judging",
+	})
 	if err != nil {
 		return err
 	}
