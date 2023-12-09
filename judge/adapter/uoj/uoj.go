@@ -177,7 +177,7 @@ func (u *UojAdapter) Judge(ctx context.Context, config common.ProblemConfig, pro
 	defer os.RemoveAll(solutionDir)
 
 	language := "C++14"
-	if content, err := os.ReadFile(solutionDir + "/.metadata.json"); err != nil {
+	if content, err := os.ReadFile(solutionDir + "/.metadata.json"); err == nil {
 		var metadata SolutionMetadata
 		json.Unmarshal(content, &metadata)
 		languages := []string{"C++", "C++11", "C++14", "Python2", "Python3"}
