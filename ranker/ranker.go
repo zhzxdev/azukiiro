@@ -45,7 +45,7 @@ type ByTotalScoreAndTime []ParticipantView
 func (a ByTotalScoreAndTime) Len() int      { return len(a) }
 func (a ByTotalScoreAndTime) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
 func (a ByTotalScoreAndTime) Less(i, j int) bool {
-	return a[i].TotalScore > a[j].TotalScore || a[i].TotalScore == a[j].TotalScore && a[i].LastSolutionTime < a[i].LastSolutionTime
+	return a[i].TotalScore > a[j].TotalScore || a[i].TotalScore == a[j].TotalScore && a[i].LastSolutionTime < a[j].LastSolutionTime
 }
 
 func Poll(ctx context.Context) (bool, error) {
