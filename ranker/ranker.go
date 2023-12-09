@@ -35,15 +35,18 @@ type Participant struct {
 }
 
 type ParticipantView struct {
-	TotalScore int
-	Raw        *Participant
+	TotalScore       int
+	LastSolutionTime int
+	Raw              *Participant
 }
 
-type ByTotalScore []ParticipantView
+type ByTotalScoreAndTime []ParticipantView
 
-func (a ByTotalScore) Len() int           { return len(a) }
-func (a ByTotalScore) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
-func (a ByTotalScore) Less(i, j int) bool { return a[i].TotalScore > a[j].TotalScore }
+func (a ByTotalScoreAndTime) Len() int      { return len(a) }
+func (a ByTotalScoreAndTime) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
+func (a ByTotalScoreAndTime) Less(i, j int) bool {
+	return a[i].TotalScore > a[j].TotalScore || a[i].TotalScore == a[j].TotalScore && a[i].LastSolutionTime < a[i].LastSolutionTime
+}
 
 func Poll(ctx context.Context) (bool, error) {
 	res, err := client.PollRanklist(ctx, &client.PollRanklistRequest{})
@@ -98,17 +101,22 @@ func Poll(ctx context.Context) (bool, error) {
 			return true, err
 		}
 		var totalScore int
+		var lastSolutionTime int
 		for _, value := range participant.Results {
 			totalScore += int(value.LastSolution.Score)
+			if value.LastSolution.CompletedAt > lastSolutionTime {
+				lastSolutionTime = value.LastSolution.CompletedAt
+			}
 		}
 		participants = append(participants, ParticipantView{
-			TotalScore: totalScore,
-			Raw:        &participant,
+			TotalScore:       totalScore,
+			LastSolutionTime: lastSolutionTime,
+			Raw:              &participant,
 		})
 	}
 
-	// Sort participants by total score
-	sort.Sort(ByTotalScore(participants))
+	// Sort participants by total score and time
+	sort.Sort(ByTotalScoreAndTime(participants))
 
 	// Sync ranklist
 	problems, err := client.GetRanklistProblems(ctx)
