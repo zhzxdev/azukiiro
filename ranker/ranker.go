@@ -29,6 +29,7 @@ type ParticipantResult struct {
 type Participant struct {
 	Id        string                       `bson:"_id"`
 	UserId    string                       `bson:"userId"`
+	Tags      []string                     `bson:"tags"`
 	ContestId string                       `bson:"contestId"`
 	Results   map[string]ParticipantResult `bson:"results"`
 	UpdatedAt int                          `bson:"updatedAt"`
@@ -168,6 +169,7 @@ func Poll(ctx context.Context) (bool, error) {
 			items = append(items, &client.RanklistParticipantItem{
 				Rank:    rank,
 				UserId:  participant.Raw.UserId,
+				Tags:    participant.Raw.Tags,
 				Columns: columns,
 			})
 		}

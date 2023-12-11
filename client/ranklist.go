@@ -90,6 +90,7 @@ type RanklistParticipantItemColumn struct {
 type RanklistParticipantItem struct {
 	Rank    int                              `json:"rank"`
 	UserId  string                           `json:"userId"`
+	Tags    []string                         `json:"tags"`
 	Columns []*RanklistParticipantItemColumn `json:"columns"`
 }
 
@@ -198,9 +199,10 @@ func GetRanklistSolutions(ctx context.Context, since int) (*GetRanklistSolutions
 }
 
 type GetRanklistParticipantsResponse []struct {
-	Id        string `json:"_id" bson:"_id"`
-	UserId    string `json:"userId" bson:"userId"`
-	ContestId string `json:"contestId" bson:"contestId"`
+	Id        string   `json:"_id" bson:"_id"`
+	UserId    string   `json:"userId" bson:"userId"`
+	ContestId string   `json:"contestId" bson:"contestId"`
+	Tags      []string `json:"tags" bson:"tags"`
 	Results   map[string]struct {
 		SolutionCount  int    `json:"solutionCount" bson:"solutionCount"`
 		LastSolutionId string `json:"lastSolutionId" bson:"lastSolutionId"`
