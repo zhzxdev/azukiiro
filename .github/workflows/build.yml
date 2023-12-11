@@ -19,7 +19,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
-          go-version-file: "path/to/go.mod"
+          go-version-file: "go.mod"
 
       - name: Build
         run: ./build.sh
