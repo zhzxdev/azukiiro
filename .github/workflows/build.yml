@@ -1,0 +1,28 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "**/*.go"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: "path/to/go.mod"
+
+      - name: Build
+        run: ./build.sh
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build/releases
