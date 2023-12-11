@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-resty/resty/v2"
 	"github.com/spf13/viper"
+	"github.com/zhzxdev/azukiiro/common"
 )
 
 var http = resty.New()
@@ -30,5 +31,6 @@ func InitFromConfig() {
 	http.SetHeaders(map[string]string{
 		"X-AOI-Runner-Id":  runnerId,
 		"X-AOI-Runner-Key": runnerKey,
+		"User-Agent":       common.GetVersion(),
 	})
 }

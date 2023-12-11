@@ -10,6 +10,7 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/zhzxdev/azukiiro/client"
+	"github.com/zhzxdev/azukiiro/common"
 )
 
 type registerArgs struct {
@@ -54,7 +55,7 @@ func runRegister(ctx context.Context, regArgs *registerArgs) func(*cobra.Command
 
 		req := &client.RegisterRequest{
 			Name:              regArgs.Name,
-			Version:           GetVersion(),
+			Version:           common.GetVersion(),
 			Labels:            splitLabels(regArgs.Labels),
 			RegistrationToken: regArgs.Token,
 		}
